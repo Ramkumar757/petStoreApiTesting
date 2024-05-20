@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "2f2b1431-b512-4f31-bc76-b26f33a52c14",
+		"name": "PetStoreUSerjsontype",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32752996",
+		"_collection_link": "https://universal-resonance-789106.postman.co/workspace/cfd9afdf-0415-4b74-8a0e-1ea97476a5a7/collection/32752996-2f2b1431-b512-4f31-bc76-b26f33a52c14?action=share&source=collection_link&creator=32752996"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomNum = Math.floor(Math.random() * 1000 + 1);\r",
+							"pm.collectionVariables.set(\"randomId\",randomNum);\r",
+							"\r",
+							"var random =Math.random().toString(36).substring(2);\r",
+							"var userName = \"ram\"+random;\r",
+							"var firstName= \"kumar\"+random;\r",
+							"var lastName= \"reddy\"+random;\r",
+							"var email = firstName+lastName+\"@gmail.com\";\r",
+							"\r",
+							"pm.collectionVariables.set(\"username\",userName);\r",
+							"pm.collectionVariables.set(\"userfirstname\",firstName);\r",
+							"pm.collectionVariables.set(\"userlastname\",lastName);\r",
+							"pm.collectionVariables.set(\"useremail\",email);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"for creating user status must be 200\", () => {\r",
+							"\r",
+							"pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"var jasonData =pm.response.json();\r",
+							"pm.test(\"validating the response body \", () => {\r",
+							"\r",
+							"    var  id = pm.collectionVariables.get(\"randomId\");\r",
+							"    pm.expect(jasonData.code).is.to.be.eql(200);\r",
+							"    pm.expect(jasonData.type).is.to.be.eql(\"unknown\");\r",
+							"    pm.expect(jasonData.message).is.to.be.eql(id.toString());\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{randomId}},\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{userfirstname}}\",\r\n  \"lastName\": \"{{userlastname}}\",\r\n  \"email\": \"{{useremail}}\",\r\n  \"password\": \"{{userlastname}}\",\r\n  \"phone\":\"1234567890\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}user",
+					"host": [
+						"{{BaseUrl}}user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByUserName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"for creating user status must be 200\", () => {\r",
+							"\r",
+							"pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"var jasonData =pm.response.json();\r",
+							"pm.test(\"validating the response body \", () => {\r",
+							"\r",
+							"    var  id = pm.collectionVariables.get(\"randomId\");\r",
+							"    pm.expect(jasonData.username).is.to.be.eql(pm.collectionVariables.get(\"username\"));\r",
+							"    pm.expect(jasonData.email).is.to.be.eql(pm.collectionVariables.get(\"useremail\"));\r",
+							"    pm.expect(jasonData.password).is.to.be.eql(pm.collectionVariables.get(\"userlastname\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}user/{{username}}",
+					"host": [
+						"{{BaseUrl}}user"
+					],
+					"path": [
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUserDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"for creating user status must be 200\", () => {\r",
+							"\r",
+							"pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"var jasonData =pm.response.json();\r",
+							"pm.test(\"validating the response body \", () => {\r",
+							"\r",
+							"    var  id = pm.collectionVariables.get(\"randomId\");\r",
+							"    pm.expect(jasonData.code).is.to.be.eql(200);\r",
+							"    pm.expect(jasonData.type).is.to.be.eql(\"unknown\");\r",
+							"    pm.expect(jasonData.message).is.to.be.eql(id.toString());\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{randomId}},\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{userfirstname}}\",\r\n  \"lastName\": \"{{userlastname}}\",\r\n  \"email\": \"{{useremail}}\",\r\n  \"password\": \"{{userlastname}}\",\r\n  \"phone\":\"987543210\",\r\n  \"userStatus\": 0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}user/{{username}}",
+					"host": [
+						"{{BaseUrl}}user"
+					],
+					"path": [
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"for creating user status must be 200\", () => {\r",
+							"\r",
+							"pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"var jasonData =pm.response.json();\r",
+							"pm.test(\"validating the response body \", () => {\r",
+							"\r",
+							"   \r",
+							"    pm.expect(jasonData.code).is.to.be.eql(200);\r",
+							"    pm.expect(jasonData.type).is.to.be.eql(\"unknown\");\r",
+							"    pm.expect(jasonData.message).is.to.be.eql(pm.collectionVariables.get(\"username\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}user/{{username}}",
+					"host": [
+						"{{BaseUrl}}user"
+					],
+					"path": [
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://petstore.swagger.io/v2/",
+			"type": "string"
+		},
+		{
+			"key": "randomId",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "userfirstname",
+			"value": ""
+		},
+		{
+			"key": "userlastname",
+			"value": ""
+		},
+		{
+			"key": "useremail",
+			"value": ""
+		}
+	]
+}
